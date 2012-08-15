@@ -1,6 +1,6 @@
 {
     "name": "getconfig",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "Henrik Joreteg <henrik@andyet.net>",
     "description": "Environment aware config reader that follows our conventions at &yet.",
     "main": "getconfig.js",

@@ -5,10 +5,10 @@ This little config reader uses the `NODE_ENV` environment variable to determine 
 
 It will then look for a config file with the corresponding name at the root of your project.
 
-Valid environments and config file names are as follows:
+You can set your environment to whatever you want, but we color these nicely:
 
 - `dev` - dev_config.json
-- `stage` - stage_config.json
+- `test` - test_config.json
 - `production` - production_config.json
 
 ### How to use it
@@ -38,6 +38,24 @@ Valid environments and config file names are as follows:
 
     // so you can just use it
     console.log(config.databasePassword); // outputs: "something long and silly"
+    ```
+
+4. (optional) You can also config whether you want it to log out it's environment info and whether or not to use colors in output. By adding the following to your `{{some name}}_config.json` file:
+
+    ```json
+    {
+        "getconfig": {
+            "colors": false, //turns off colors
+        }
+    }
+    ```
+
+    ```json
+    {
+        "getconfig": {
+            "silent": true, //turns off all output
+        }
+    }
     ```
 
 ### License
