@@ -37,7 +37,7 @@ Valid environments and config file names are as follows:
     var config = require('getconfig')
 
     // so you can just use it
-    connectToDatabase(config.databasePassword);
+    console.log(config.databasePassword); // outputs: "something long and silly"
     ```
 
 ### License
