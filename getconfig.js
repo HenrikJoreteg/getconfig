@@ -1,11 +1,12 @@
 var fs = require('fs'),
+    path = require('path'),
     env = process.env.NODE_ENV || 'dev',
     colors = require('colors'),
     useColor = true,
     silent = false,
     color,
     config,
-    path;
+    configPath;
 
 // set our color based on environment
 if (env === 'dev') {
@@ -24,14 +25,14 @@ function c(str, color) {
 }
 
 // build a file path to the config
-path = __dirname + '/../../' + env + '_config.json';
+configPath = path.dirname(require.main.filename) + '/' + env + '_config.json';
 
 // try to read it
 try {
-    config = fs.readFileSync(path, 'utf-8');
+    config = fs.readFileSync(configPath, 'utf-8');
 } catch (e) {
     console.error(c("No config file found for %s", 'red'), env);
-    console.error(c("We couldn't find anything at: %s", 'grey'), path);
+    console.error(c("We couldn't find anything at: %s", 'grey'), configPath);
     throw e;
 }
 
