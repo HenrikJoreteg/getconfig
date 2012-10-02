@@ -3,7 +3,7 @@
 ### Why, what, how?
 This little config reader uses the `NODE_ENV` environment variable to determine the execution environment we're in and then reads a file that matches that name. 
 
-It will then look for a config file with the corresponding name at the root of your project.
+It will then look for a config file with the corresponding name in the same folder as the entry point of your current application. In most cases, that's the root of your project.
 
 You can set your environment to whatever you want, but we color these nicely:
 
