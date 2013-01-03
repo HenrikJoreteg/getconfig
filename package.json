@@ -1,7 +1,13 @@
 {
     "name": "getconfig",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "author": "Henrik Joreteg <henrik@andyet.net>",
+    "contributors": [ 
+        {
+            "name": "Nathan La Freniere",
+            "email": "nlf@andyet.net"
+        } 
+    ],
     "description": "Environment aware config reader that follows our conventions at &yet.",
     "main": "getconfig.js",
     "dependencies": {
