@@ -38,6 +38,7 @@ You can set your environment to whatever you want, but we color these nicely:
 
     // so you can just use it
     console.log(config.databasePassword); // outputs: "something long and silly"
+    console.log(config.getconfig.env); // outputs the current environment
     ```
 
 4. (optional) You can also config whether you want it to log out it's environment info and whether or not to use colors in output. By adding the following to your `{{some name}}_config.json` file:
