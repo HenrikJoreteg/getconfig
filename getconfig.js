@@ -41,7 +41,10 @@ try {
     if (config.getconfig) {
         if (config.getconfig.hasOwnProperty('colors')) useColor = config.getconfig.colors;
         if (config.getconfig.hasOwnProperty('silent')) silent = config.getconfig.silent;        
+    } else {
+        config.getconfig = {};
     }
+    config.getconfig.env = env;
 
 } catch (e) {
     console.error(c("Invalid JSON file", 'red'));
