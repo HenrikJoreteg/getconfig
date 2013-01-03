@@ -59,6 +59,10 @@ You can set your environment to whatever you want, but we color these nicely:
     }
     ```
 
+### Extra
+
+getconfig will also fill in the `getconfig.env` value with the current environment name so you can programatically determine the environment if you'd like.
+
 ### License
 
 MIT
