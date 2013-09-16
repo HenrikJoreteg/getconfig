@@ -33,7 +33,7 @@ try {
 } catch (e) {
     console.error(c("No config file found for %s", 'red'), env);
     console.error(c("We couldn't find anything at: %s", 'grey'), configPath);
-    throw e;
+    config = "{}";
 }
 
 try {
@@ -49,7 +49,6 @@ try {
 } catch (e) {
     console.error(c("Invalid JSON file", 'red'));
     console.error(c("Check it at:", 'grey') + c(" http://jsonlint.com", 'blue'));
-    config = {};
 }
 
 // log out what we've got
