@@ -40,7 +40,7 @@ try {
     config = JSON.parse(config);
     if (config.getconfig) {
         if (config.getconfig.hasOwnProperty('colors')) useColor = config.getconfig.colors;
-        if (config.getconfig.hasOwnProperty('silent')) silent = config.getconfig.silent;        
+        if (config.getconfig.hasOwnProperty('silent')) silent = config.getconfig.silent;
     } else {
         config.getconfig = {};
     }
@@ -49,7 +49,7 @@ try {
 } catch (e) {
     console.error(c("Invalid JSON file", 'red'));
     console.error(c("Check it at:", 'grey') + c(" http://jsonlint.com", 'blue'));
-    throw e;
+    config = {};
 }
 
 // log out what we've got
