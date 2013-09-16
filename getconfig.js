@@ -49,6 +49,7 @@ try {
 } catch (e) {
     console.error(c("Invalid JSON file", 'red'));
     console.error(c("Check it at:", 'grey') + c(" http://jsonlint.com", 'blue'));
+    throw e;
 }
 
 // log out what we've got
