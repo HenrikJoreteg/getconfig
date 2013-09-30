@@ -25,7 +25,7 @@ function c(str, color) {
 }
 
 // build a file path to the config
-configPath = (require.main ? path.dirname(require.main.filename) : ".") + '/' + env + '_config.json';
+configPath = (require.main ? path.dirname(require.main.filename) : ".") + path.sep + env + '_config.json';
 
 // try to read it
 try {
