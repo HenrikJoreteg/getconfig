@@ -59,9 +59,14 @@ You can set your environment to whatever you want, but we color these nicely:
     }
     ```
 
+
 ### Extra
 
 getconfig will also fill in the `getconfig.env` value with the current environment name so you can programatically determine the environment if you'd like.
+
+### Gotchas
+
+In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, set the GETCONFIG\_ROOT environment variable to directory where your configs are held.
 
 ### License
 
