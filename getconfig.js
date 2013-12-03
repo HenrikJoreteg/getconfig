@@ -6,6 +6,7 @@ var fs = require('fs'),
     silent = false,
     color,
     config,
+    configRoot,
     configPath;
 
 // set our color based on environment
@@ -25,7 +26,8 @@ function c(str, color) {
 }
 
 // build a file path to the config
-configPath = (require.main ? path.dirname(require.main.filename) : ".") + path.sep + env + '_config.json';
+configRoot = process.env.GETCONFIG_ROOT || (require.main ? path.dirname(require.main.filename) : ".");
+configPath = configRoot + path.sep + env + '_config.json';
 
 // try to read it
 try {

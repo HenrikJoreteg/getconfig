@@ -12,5 +12,11 @@
     "main": "getconfig.js",
     "dependencies": {
         "colors": ""
+    },
+    "devDependencies": {
+        "tape": "~2.3.0"
+    },
+    "scripts": {
+        "test": "node tests/tests.js"
     }
 }
