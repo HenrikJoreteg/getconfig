@@ -4,6 +4,10 @@
     "author": "Henrik Joreteg <henrik@andyet.net>",
     "description": "Environment aware config reader that follows our conventions at &yet.",
     "main": "getconfig.js",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:HenrikJoreteg/getconfig.git"
+    },
     "dependencies": {
         "colors": ""
     },
