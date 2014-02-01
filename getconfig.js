@@ -1,4 +1,5 @@
-var fs = require('fs'),
+var ALCE = require('alce'),
+    fs = require('fs'),
     path = require('path'),
     env = process.env.NODE_ENV || 'dev',
     colors = require('colors'),
@@ -39,7 +40,8 @@ try {
 }
 
 try {
-    config = JSON.parse(config);
+    // use ALCE to parse to allow comments/single quotes
+    config = ALCE.parse(config);
     if (config.getconfig) {
         if (config.getconfig.hasOwnProperty('colors')) useColor = config.getconfig.colors;
         if (config.getconfig.hasOwnProperty('silent')) silent = config.getconfig.silent;
