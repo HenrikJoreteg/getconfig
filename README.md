@@ -1,13 +1,13 @@
 #getconfig - config fetcher for node.js
 
-Managing configs for different envirments is kind of a pain. 
+Managing configs for different environments is kind of a pain. 
 
 In short I wanted it to:
 - Be simple to understand and use
 - Use `NODE_ENV` environment variable to grab appropriate config
-- let me just go `var config = require('getconfig')` from anywhere in the app and have it Just Work™
-- Let me write configs that are structured like JSON but:
-    - allow comments
+- Let me just go `var config = require('getconfig')` from anywhere in the app and have it Just Work™
+- Let me write configs that are structured like JSON but allow:
+    - comments
     - single quotes
     - trailing commas
 
@@ -22,7 +22,7 @@ In short I wanted it to:
 var config = require('getconfig');
 
 ```
-4. that's it!
+4. That's it!
 
 
 ## Where to put your config and what to call it
@@ -33,7 +33,7 @@ Just name it so that it matches the following pattern: `{{ environment name }}_c
 
 If `NODE_ENV` isn't set it defaults to `dev`.
 
-You can set name your environments whatever you want, but we color these nicely:
+You can name your environments whatever you want, but we color these nicely:
 
 - `dev` - dev_config.json
 - `test` - test_config.json
@@ -47,7 +47,7 @@ getconfig uses [ALCE](https://github.com/walmartlabs/ALCE) to parse JSON files, 
 
 ## Explicitly setting the config location
 
-In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, you can set a `GETCONFIG_ROOT` environment variable to directory where your configs are held.
+In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, you can set a `GETCONFIG_ROOT` environment variable to the directory where your configs are held.
 
 
 ## Other options, info
