@@ -75,7 +75,10 @@ getconfig will always fill in the `getconfig.env` value in your resulting config
 
 ## Changelog
 
-0.3.0 - Switching from JSON.parse to ALCE to allow single quotes and comments. Better readme.
+- `1.0.0`
+    - Bumping major to get out of `0.x.x` range per semver conventions. 
+    - `dev` enviroments now look for related config files. So if you've set your `$NODE_ENV` to `development` and it will still find a file called `dev_config.json`.
+- `0.3.0` - Switching from JSON.parse to ALCE to allow single quotes and comments. Better readme.
 
 
 ## License
