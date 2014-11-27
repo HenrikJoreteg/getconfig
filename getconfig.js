@@ -1,14 +1,20 @@
-var ALCE = require('alce'),
-    fs = require('fs'),
-    path = require('path'),
-    env = process.env.NODE_ENV || 'dev',
-    colors = require('colors'),
-    useColor = true,
-    silent = false,
-    color,
-    config,
-    configRoot,
-    configPath;
+var ALCE = require('alce');
+var fs = require('fs');
+var path = require('path');
+var tryit = require('tryit');
+var env = process.env.NODE_ENV || 'dev';
+var colors = require('colors');
+var useColor = true;
+var silent = false;
+var devAliases = [
+    'development',
+    'dev',
+    'devel',
+    'develop'
+];
+var isDev = devAliases.indexOf(env) !== -1;
+var color, config, configRoot, configPath, altConfigPath;
+
 
 // set our color based on environment
 if (env === 'dev') {
@@ -30,10 +36,23 @@ function c(str, color) {
 configRoot = process.env.GETCONFIG_ROOT || (require.main ? path.dirname(require.main.filename) : ".");
 configPath = configRoot + path.sep + env + '_config.json';
 
-// try to read it
-try {
+tryit(function () {
     config = fs.readFileSync(configPath, 'utf-8');
-} catch (e) {
+});
+
+// if development also try other names
+if (!config && isDev) {
+    // we'll try until we get a config
+    devAliases.some(function (alias) {
+        altConfigPath = configRoot + path.sep + alias + '_config.json';
+        tryit(function () {
+            config = fs.readFileSync(altConfigPath, 'utf-8');
+        });
+        return !!config;
+    });
+}
+
+if (!config) {
     console.error(c("No config file found for %s", 'red'), env);
     console.error(c("We couldn't find anything at: %s", 'grey'), configPath);
     config = "{}";

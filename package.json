@@ -1,21 +1,22 @@
 {
-    "name": "getconfig",
-    "version": "0.3.0",
-    "author": "Henrik Joreteg <henrik@andyet.net>",
-    "description": "Environment aware config reader that follows our conventions at &yet.",
-    "main": "getconfig.js",
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:HenrikJoreteg/getconfig.git"
-    },
-    "dependencies": {
-        "colors": "0.6.2",
-        "alce": "1.0.0"
-    },
-    "devDependencies": {
-        "tape": "~2.3.0"
-    },
-    "scripts": {
-        "test": "node tests/tests.js"
-    }
+  "name": "getconfig",
+  "description": "Environment aware config reader that follows our conventions at &yet.",
+  "version": "0.3.0",
+  "author": "Henrik Joreteg <henrik@andyet.net>",
+  "dependencies": {
+    "alce": "1.0.0",
+    "colors": "0.6.2",
+    "tryit": "^1.0.0"
+  },
+  "devDependencies": {
+    "tape": "~2.3.0"
+  },
+  "main": "getconfig.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:HenrikJoreteg/getconfig.git"
+  },
+  "scripts": {
+    "test": "node tests/tests.js"
+  }
 }
