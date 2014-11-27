@@ -1,7 +1,7 @@
 {
   "name": "getconfig",
   "description": "Environment aware config reader that follows our conventions at &yet.",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "author": "Henrik Joreteg <henrik@andyet.net>",
   "dependencies": {
     "alce": "1.0.0",
