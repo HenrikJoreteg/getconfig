@@ -57,4 +57,4 @@ getconfig will always fill in the `getconfig.env` value in your resulting config
 
 MIT
 
-if you dig it follow [@HenrikJoreteg](http://twitter.com/henrikjoreteg) on twitter.
+if you dig it follow [@HenrikJoreteg](http://twitter.com/henrikjoreteg) and/or [@quitlahok](http://twitter.com/quitlahok) on twitter.
