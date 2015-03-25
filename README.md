@@ -37,7 +37,7 @@ In the event that `NODE_ENV` is not set, getconfig will attempt to load `dev`, `
 
 ## Explicitly setting the config location
 
-In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, you can set a `GETCONFIG_ROOT` environment variable to the directory where your config directory is located.
+In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, you can set a `GETCONFIG_ROOT` environment variable to the directory where your config files are located.
 
 
 getconfig will always fill in the `getconfig.env` value in your resulting config object with the current environment name so you can programatically determine the environment if you'd like. If no `NODE_ENV` is set it will also set `getconfig.isDev` to `true`.
