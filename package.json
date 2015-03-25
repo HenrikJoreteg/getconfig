@@ -3,9 +3,7 @@
   "description": "Environment aware config reader that follows our conventions at &yet.",
   "version": "2.0.0",
   "author": "Henrik Joreteg <henrik@andyet.net>",
-  "dependencies": {
-    "hoek": "^2.12.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "tape": "~2.3.0"
   },

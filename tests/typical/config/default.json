@@ -1,8 +1,8 @@
 {
-    "testValue": "dev-value",
+    "default": true,
     "options": {
         "one": {
-            "four": "five"
+            "two": "three"
         },
         "two": null
     }

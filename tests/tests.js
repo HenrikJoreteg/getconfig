@@ -16,7 +16,7 @@ test('It should import properly when require.main is the config root', function 
 
 // Test normal use case
 test('It should import properly when require.main is not the config root but GETCONFIG_ROOT is set', function (test) {
-    var config_path = path.join(__dirname, 'typical');
+    var config_path = path.join(__dirname, 'typical', 'config');
     exec('GETCONFIG_ROOT=' + config_path + ' NODE_ENV=dev node ' + path.join(__dirname, 'nonroot', 'app.js'), function (err, stdout, stderr) {
         test.assert(!err);
         test.end();
