@@ -35,6 +35,14 @@ Note that we don't list extensions, that's because the files are loaded via node
 
 In the event that `NODE_ENV` is not set, getconfig will attempt to load `dev`, `devel`, `develop`, and `development` in its place.
 
+## Environment variables
+
+In a lot of situations it's simpler to pass configuration via environment variables, rather than hardcoding it into a config file.
+
+Fortunately, getconfig can fill those in for you. Just set the value of a key to a string like `'$NODE_ENV'` for example and the environment variable will be expanded inline.
+
+Note that this will *only* work for environment variables whose names are within the character set of A-Z, 0-9, and _ (underscore). This is to prevent collisions with things like complex strings that may start with a `$`.
+
 ## Explicitly setting the config location
 
 In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, you can set a `GETCONFIG_ROOT` environment variable to the directory where your config files are located.

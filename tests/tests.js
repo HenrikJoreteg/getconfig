@@ -22,3 +22,14 @@ test('It should import properly when require.main is not the config root but GET
         test.end();
     });
 });
+
+test('It expands environment variables', function (test) {
+    exec('NODE_ENV=test node ' + path.join(__dirname, 'typical', 'app.js'), function (err, stdout, stderr) {
+        test.assert(!err);
+        var conf = JSON.parse(stdout);
+        test.assert(conf.testEnv === 'test');
+        test.assert(conf.deeper.testEnv === 'test');
+        test.assert(conf.invalidEnv === '$NotanENV');
+        test.end();
+    });
+});

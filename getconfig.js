@@ -70,6 +70,31 @@ internals.tryRequire = function (root, type) {
     return result;
 };
 
+internals.envRE = /^\$[A-Z0-9_]+$/;
+internals.expandEnvironment = function (config) {
+
+    var keys = Object.keys(config);
+    for (var i = 0, il = keys.length; i < il; ++i) {
+        var key = keys[i];
+        var value = config[key];
+        if (typeof value === 'string' &&
+            internals.envRE.test(value)) {
+
+            var trimmed = value.slice(1);
+            if (!process.env[trimmed]) {
+                throw new Error('Unable to resolve environment variable ' + value);
+            }
+
+            config[key] = process.env[trimmed];
+        }
+        else if (typeof value === 'object' &&
+                 value !== null) {
+
+            internals.expandEnvironment(value);
+        }
+    }
+};
+
 internals.init = function () {
 
     var root = process.env.GETCONFIG_ROOT ? Path.resolve(process.cwd(), process.env.GETCONFIG_ROOT) : internals.findConfig();
@@ -106,6 +131,7 @@ internals.init = function () {
         throw new Error('No config files found');
     }
 
+    internals.expandEnvironment(config);
     return config;
 };
 
