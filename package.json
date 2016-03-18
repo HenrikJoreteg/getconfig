@@ -5,7 +5,7 @@
   "author": "Henrik Joreteg <henrik@andyet.net>",
   "dependencies": {},
   "devDependencies": {
-    "tape": "~2.3.0"
+    "tape": "^4.5.1"
   },
   "files": [
     "getconfig.js"
