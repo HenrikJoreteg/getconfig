@@ -52,7 +52,8 @@ getconfig will always fill in the `getconfig.env` value in your resulting config
 
 
 ## Changelog
-
+- `3.0.0`
+    - Does not merge arrays from config layers, instead overwrites them entirely with the topmost config's array.
 - `2.0.0`
     - Total refactor, now stores config files in a directory and merges them on top of each other for simplicity.
 - `1.0.0`

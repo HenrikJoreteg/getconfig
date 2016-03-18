@@ -10,6 +10,7 @@ internals.merge = function (target, source) {
     for (var i = 0, il = keys.length; i < il; ++i) {
         var key = keys[i];
         if (target.hasOwnProperty(key) &&
+            !Array.isArray(target[key]) &&
             typeof target[key] === 'object' &&
             typeof source[key] === 'object' &&
             source[key] !== null) {

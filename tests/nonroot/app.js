@@ -13,4 +13,4 @@ if (NODE_ENV === 'test') {
     assert.equal(config.testValue, 'test-value');
 }
 
-console.log('All tests passed');
+console.log(JSON.stringify(config));
