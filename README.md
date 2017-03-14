@@ -15,10 +15,10 @@ In short I wanted it to:
 2. Create a `config/default.json` file in the same folder as the main entry point (usually project root)
 3. Just require getconfig like so from anywhere in your project:
 
-```js
-var config = require('getconfig');
+	```js
+	var config = require('getconfig');
+	```
 
-```
 4. That's it!
 
 
@@ -39,7 +39,13 @@ In the event that `NODE_ENV` is not set, getconfig will attempt to load `dev`, `
 
 In a lot of situations it's simpler to pass configuration via environment variables, rather than hardcoding it into a config file.
 
-Fortunately, getconfig can fill those in for you. Just set the value of a key to a string like `'$NODE_ENV'` for example and the environment variable will be expanded inline.
+Fortunately, `getconfig` can fill those in for you. Just set the value of a key to reference the environment variable and it will be expanded inline. For example:
+
+```json
+{
+	"envVariable": "$ENV_VAR"
+}
+```
 
 Note that this will *only* work for environment variables whose names are within the character set of A-Z, 0-9, and _ (underscore). This is to prevent collisions with things like complex strings that may start with a `$`.
 
