@@ -1,4 +1,4 @@
-#getconfig - config fetcher for node.js
+# getconfig - config fetcher for node.js
 
 Managing configs for different environments is kind of a pain. 
 
