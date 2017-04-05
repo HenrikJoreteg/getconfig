@@ -27,6 +27,26 @@ test('It should import properly when require.main is not the config root but GET
     });
 });
 
+test('It should import properly when require.main is not the config root but CODE_LOCATION is set', function (test) {
+    var config_path = path.join(__dirname, 'typical');
+    exec('CODE_LOCATION=' + config_path + ' NODE_ENV=dev node ' + path.join(__dirname, 'nonroot', 'app.js'), function (err, stdout, stderr) {
+        test.assert(!err, 'did not error');
+        var conf = JSON.parse(stdout);
+        test.assert(conf.getconfig.env === 'dev', 'loaded the right env');
+        test.end();
+    });
+});
+
+test('It should import properly when require.main is not the config root but LAMBDA_TASK_ROOT is set', function (test) {
+    var config_path = path.join(__dirname, 'typical');
+    exec('LAMBDA_TASK_ROOT=' + config_path + ' NODE_ENV=dev node ' + path.join(__dirname, 'nonroot', 'app.js'), function (err, stdout, stderr) {
+        test.assert(!err, 'did not error');
+        var conf = JSON.parse(stdout);
+        test.assert(conf.getconfig.env === 'dev', 'loaded the right env');
+        test.end();
+    });
+});
+
 test('It expands environment variables', function (test) {
     exec('NODE_ENV=test node ' + path.join(__dirname, 'typical', 'app.js'), function (err, stdout, stderr) {
         test.assert(!err, 'did not error');
