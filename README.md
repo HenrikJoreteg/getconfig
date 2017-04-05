@@ -66,6 +66,8 @@ getconfig will always fill in the `getconfig.env` value in your resulting config
 
 
 ## Changelog
+- `3.1.0`
+    - Supports Google Cloud Functions and AWS Lambda functions out of the box
 - `3.0.0`
     - Does not merge arrays from config layers, instead overwrites them entirely with the topmost config's array.
 - `2.0.0`
