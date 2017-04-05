@@ -98,7 +98,15 @@ internals.expandEnvironment = function (config) {
 
 internals.init = function () {
 
-    var root = process.env.GETCONFIG_ROOT ? Path.resolve(process.cwd(), process.env.GETCONFIG_ROOT) : internals.findConfig();
+    var override = process.env.CODE_LOCATION || process.env.LAMBDA_TASK_ROOT;
+    if (override) {
+        override = Path.join(override, 'config');
+    }
+    else {
+        override = process.env.GETCONFIG_ROOT;
+    }
+
+    var root = override ? Path.resolve(process.cwd(), override) : internals.findConfig();
 
     var failed = 0;
     var config = {};

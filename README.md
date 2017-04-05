@@ -53,6 +53,14 @@ Note that this will *only* work for environment variables whose names are within
 
 In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, you can set a `GETCONFIG_ROOT` environment variable to the directory where your config files are located.
 
+### Cloud Functions
+
+When used in a Google Cloud Function or an AWS Lambda function, getconfig will use the `CODE_LOCATION` or `LAMBDA_TASK_ROOT` environment variable, respectively, to automatically locate the appropriate root. This means that you can include your `config` directory in your function deployment and things should work as you would expect them to.
+
+Note: Google Cloud Functions automatically set `NODE_ENV` to `"production"` when deployed, however Lambda leaves `NODE_ENV` unset by default.
+
+
+## Environment
 
 getconfig will always fill in the `getconfig.env` value in your resulting config object with the current environment name so you can programatically determine the environment if you'd like. If no `NODE_ENV` is set it will also set `getconfig.isDev` to `true`.
 
