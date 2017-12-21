@@ -66,7 +66,7 @@ Additionally, since all environment variables are strings, getconfig can also pe
     "stringArray": "$STRING_ARRAY_VALUE::array",
     "boolean": "$BOOL_VALUE::boolean",
     "booleanArray": "$BOOLEAN_ARRAY_VALUE::array:boolean",
-    "date": $DATE_VALUE::date",
+    "date": "$DATE_VALUE::date",
     "dateArray": "$DATE_ARRAY_VALUE::array:date",
     "number": "$NUMBER_VALUE::number",
     "numberArray": "$NUMBER_ARRAY_VALUE::array:number",
