@@ -90,19 +90,36 @@ internals.require = function (root, env) {
 };
 
 
-internals.findConfig = function (_root) {
+internals.findConfig = function (root) {
 
-    const root = _root || (require.main ? Path.dirname(require.main.filename) : process.cwd());
-    const path = Path.join(root, 'config');
-    if (internals.isDir(path)) {
-        return path;
+    const locate = function (start) {
+
+        const path = Path.join(start, 'config');
+        if (internals.isDir(path)) {
+            return path;
+        }
+
+        if (Path.dirname(start) === start) {
+            throw new Errors.DirNotFoundError();
+        }
+
+        return locate(Path.dirname(start));
+    };
+
+    if (root) {
+        return locate(root);
     }
 
-    if (Path.dirname(root) === root) {
-        throw new Errors.DirNotFoundError();
+    if (require.main) {
+        try {
+            return locate(Path.dirname(require.main.filename));
+        }
+        catch (err) {
+            return locate(process.cwd());
+        }
     }
 
-    return internals.findConfig(Path.dirname(root));
+    return locate(process.cwd());
 };
 
 
