@@ -71,7 +71,7 @@ Additionally, since all environment variables are strings, getconfig can also pe
     "number": "$NUMBER_VALUE::number",
     "numberArray": "$NUMBER_ARRAY_VALUE::array:number",
     "object": "$OBJECT_VALUE::object",
-    "objectArray": "$OBJECT_ARRAY_VALUE::array:object"
+    "objectArray": "$OBJECT_ARRAY_VALUE::array:object",
     "regex": "$REGEX_VALUE::regex",
     "regexArray": "$REGEX_ARRAY_VALUE::array:regex"
 }
