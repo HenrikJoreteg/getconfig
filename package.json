@@ -1,21 +1,24 @@
 {
   "name": "getconfig",
-  "description": "Environment aware config reader that follows our conventions at &yet.",
+  "description": "Environment aware config reader",
   "version": "3.1.0",
-  "author": "Henrik Joreteg <henrik@andyet.net>",
+  "author": "Nathan LaFreniere <quitlahok@gmail.com>",
   "dependencies": {},
   "devDependencies": {
-    "tape": "^4.5.1"
+    "code": "^5.1.2",
+    "lab": "^15.1.2"
   },
   "files": [
-    "getconfig.js"
+    "errors.js",
+    "index.js",
+    "types.js"
   ],
-  "main": "getconfig.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:HenrikJoreteg/getconfig.git"
   },
   "scripts": {
-    "test": "node tests/tests.js"
+    "test": "lab -a code -L"
   }
 }

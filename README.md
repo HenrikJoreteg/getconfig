@@ -1,23 +1,23 @@
 # getconfig - config fetcher for node.js
 
-Managing configs for different environments is kind of a pain. 
+Managing configs for different environments is kind of a pain.
 
 In short I wanted it to:
 - Be simple to understand and use
 - Use `NODE_ENV` environment variable to grab appropriate config
-- Let me just go `var config = require('getconfig')` from anywhere in the app and have it Just Work™
+- Let me just go `const config = require('getconfig')` from anywhere in the app and have it Just Work™
 - Allow using different formats (via require hooks)
 
 
 ## How to use
 
 1. `npm install getconfig`
-2. Create a `config/default.json` file in the same folder as the main entry point (usually project root)
+2. Create a `config/default.json` (or `config/default.js`, anything you can `require()` will work) file in the same folder as the main entry point (usually project root)
 3. Just require getconfig like so from anywhere in your project:
 
-	```js
-	var config = require('getconfig');
-	```
+```js
+const Config = require('getconfig');
+```
 
 4. That's it!
 
@@ -43,11 +43,58 @@ Fortunately, `getconfig` can fill those in for you. Just set the value of a key 
 
 ```json
 {
-	"envVariable": "$ENV_VAR"
+    "envVariable": "$ENV_VAR"
 }
 ```
 
 Note that this will *only* work for environment variables whose names are within the character set of A-Z, 0-9, and _ (underscore). This is to prevent collisions with things like complex strings that may start with a `$`.
+
+Environment variables can be made optional by specifying a second `$` in the value's name, such as:
+
+```json
+{
+    "envVariable": "$$ENV_VAR"
+}
+```
+
+When an optional environment variable is unspecified, it is _removed_ from that layer of configuration. This allows you to specify a default in `config/default` and an optional value in `config/dev`, and if the optional value in `config/dev` is unset the value from `config/default` will be used.
+
+Additionally, since all environment variables are strings, getconfig can also perform type coercion for you by specifying a `::type` suffix. The following types are supported out of the box:
+
+```json
+{
+    "stringArray": "$STRING_ARRAY_VALUE::array",
+    "boolean": "$BOOL_VALUE::boolean",
+    "booleanArray": "$BOOLEAN_ARRAY_VALUE::array:boolean",
+    "date": "$DATE_VALUE::date",
+    "dateArray": "$DATE_ARRAY_VALUE::array:date",
+    "number": "$NUMBER_VALUE::number",
+    "numberArray": "$NUMBER_ARRAY_VALUE::array:number",
+    "object": "$OBJECT_VALUE::object",
+    "objectArray": "$OBJECT_ARRAY_VALUE::array:object",
+    "regex": "$REGEX_VALUE::regex",
+    "regexArray": "$REGEX_ARRAY_VALUE::array:regex"
+}
+```
+
+The `array` type is special in that it accepts an optional argument specified by an additional `:type` suffix, that allows creating an array of a typed value.
+
+In addition to the built in types, it is possible to add your own types like so:
+
+```js
+const Errors = require('getconfig/errors');
+const Types = require('getconfig/types');
+
+Types.custom = function (val, arg1, arg2) {
+    // do some conversion here
+    return val;
+    // throw new Errors.ConversionError(); // if something failed
+};
+
+const Config = require('getconfig');
+```
+
+You can then use `::custom` as a suffix in your config and environment variables will be processed through your custom function. If your custom function accepts arguments (in the example above `arg1` and `arg2`) they can be passed like so `$$ENV_VAR::custom:arg:arg`. Note that every argument will be passed as a string and it is up to your custom function to handle them appropriately.
 
 ## Explicitly setting the config location
 
@@ -66,14 +113,16 @@ getconfig will always fill in the `getconfig.env` value in your resulting config
 
 
 ## Changelog
+- `4.0.0`
+    - Total rewrite, now supports optional environment variables as well as type coercion and custom type processors.
 - `3.1.0`
-    - Supports Google Cloud Functions and AWS Lambda functions out of the box
+    - Supports Google Cloud Functions and AWS Lambda functions out of the box.
 - `3.0.0`
     - Does not merge arrays from config layers, instead overwrites them entirely with the topmost config's array.
 - `2.0.0`
     - Total refactor, now stores config files in a directory and merges them on top of each other for simplicity.
 - `1.0.0`
-    - Bumping major to get out of `0.x.x` range per semver conventions. 
+    - Bumping major to get out of `0.x.x` range per semver conventions.
     - `dev` enviroments now look for related config files. So if you've set your `$NODE_ENV` to `development` and it will still find a file called `dev_config.json`.
 - `0.3.0` - Switching from JSON.parse to ALCE to allow single quotes and comments. Better readme.
 

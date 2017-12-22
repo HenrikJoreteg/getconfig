@@ -1,0 +1,18 @@
+{
+  "array": "$$ARRAY::array",
+  "boolean": "$$BOOLEAN::boolean",
+  "booleanArray": "$$BOOLEAN_ARRAY::array:boolean",
+  "custom": "$$CUSTOM::custom:one:two",
+  "customArray": "$$CUSTOM_ARRAY::array:custom:one:two",
+  "customError": "$$CUSTOM_ERROR::custom:err",
+  "date": "$$DATE::date",
+  "dateArray": "$$DATE_ARRAY::array:date",
+  "number": "$$NUMBER::number",
+  "numberArray": "$$NUMBER_ARRAY::array:number",
+  "object": "$$OBJECT::object",
+  "objectArray": "$$OBJECT_ARRAY::array:object",
+  "regex": "$$REGEX::regex",
+  "regexArray": "$$REGEX_ARRAY::array:regex",
+  "invalid": "$$INVALID::invalid",
+  "invalidArray": "$$INVALID_ARRAY::array:invalid"
+}

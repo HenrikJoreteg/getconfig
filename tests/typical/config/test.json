@@ -1,8 +1,0 @@
-{
-    "testValue": "test-value",
-    "testEnv": "$NODE_ENV",
-    "invalidEnv": "$NotanENV",
-    "deeper": {
-        "testEnv": "$NODE_ENV"
-    }
-}
