@@ -55,6 +55,24 @@ internals.process = function (cfg) {
 };
 
 
+internals.merge = function (target, source) {
+
+    for (const key in source) {
+        if (target.hasOwnProperty(key) &&
+            !Array.isArray(target[key]) &&
+            typeof target[key] === 'object' &&
+            typeof source[key] === 'object' &&
+            source[key] !== null) {
+
+            internals.merge(target[key], source[key]);
+            continue;
+        }
+
+        target[key] = source[key];
+    }
+};
+
+
 internals.isDir = function (path) {
 
     try {
@@ -144,7 +162,7 @@ internals.init = function () {
                 acc.result.getconfig.env = env;
             }
             acc.found = true;
-            acc.result = Object.assign(acc.result, internals.process(cfg.value));
+            internals.merge(acc.result, internals.process(cfg.value));
         }
 
         return acc;
