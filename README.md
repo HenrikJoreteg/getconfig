@@ -63,7 +63,7 @@ Required environment variables may be used in string interpolation like so:
 
 ```json
 {
-    "envVariable: "some ${ENV_VAR}"
+    "envVariable": "some ${ENV_VAR}"
 }
 ```
 
