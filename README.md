@@ -112,7 +112,7 @@ Your configuration can also reference variables within itself as part of string 
 
 ```json
 {
-    "port": "$PORT::int",
+    "port": "$PORT::number",
     "host": "$HOSTNAME",
     "url": "http://${self.host}:${self.port}
 }
