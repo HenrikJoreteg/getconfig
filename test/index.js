@@ -129,6 +129,46 @@ describe('environment variables', () => {
         const config = JSON.parse(app.stdout);
         expect(config).to.equal({ default: true, optional: 'optional', local: true, getconfig: { isDev: false, env: 'optional' } });
     });
+
+    it('interpolates environment variables', () => {
+
+        const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'interpolate', VAR: 'basic' } }));
+        const config = JSON.parse(app.stdout);
+        expect(config).to.equal({ default: true, local: true, basic: 'some basic interpolation', getconfig: { isDev: false, env: 'interpolate' } });
+    });
+
+    it('fails with EUNSETENVVAR when attempting to interpolate an unset environment variable', () => {
+
+        const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'interpolate' } }));
+        const error = JSON.parse(app.stdout);
+        expect(error.code).to.equal('EUNSETENVVAR');
+    });
+
+    it('interpolates self references', () => {
+
+        const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'reference' } }));
+        const config = JSON.parse(app.stdout);
+        expect(config).to.equal({
+            default: true,
+            local: true,
+            value: 'reference',
+            shallow: 'some reference',
+            a: {
+                deeper: {
+                    value: 'test'
+                }
+            },
+            deep: 'deep test',
+            getconfig: { isDev: false, env: 'reference' }
+        });
+    });
+
+    it('fails with EMISSINGPROPERTY when attempting to interpolate a missing self reference', () => {
+
+        const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'badref' } }));
+        const error = JSON.parse(app.stdout);
+        expect(error.code).to.equal('EMISSINGPROPERTY');
+    });
 });
 
 describe('types', () => {

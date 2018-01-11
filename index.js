@@ -8,22 +8,35 @@ const Types = require('./types');
 
 const internals = {};
 
-internals.process = function (cfg) {
+internals.processEnv = function (cfg) {
 
     for (const key in cfg) {
         if (typeof cfg[key] === 'object' &&
             cfg[key] !== null) {
 
-            cfg[key] = internals.process(cfg[key]);
+            cfg[key] = internals.processEnv(cfg[key]);
         }
         else if (typeof cfg[key] === 'string') {
-            const match = /^(\$\$?)([A-Z0-9_]+)(?:::([^\s:]+):?([^\s]+)?)?$/.exec(cfg[key]);
-            if (!match) {
-                continue;
-            }
+            let interpolate = false;
+            let required = true;
+            let original;
+            let name;
+            let type;
+            let arg = '';
 
-            let [,required, name, type, arg = ''] = match;
-            required = required.length === 1;
+            let match = /^(\$\$?)([A-Z0-9_]+)(?:::([^\s:]+):?([^\s]+)?)?$/.exec(cfg[key]);
+            if (!match) {
+                match = /\$\{([A-Z0-9_]+)\}/.exec(cfg[key]);
+                if (!match) {
+                    continue;
+                }
+                interpolate = true;
+                [original, name] = match;
+            }
+            else {
+                [,required, name, type, arg = ''] = match;
+                required = required.length === 1;
+            }
 
             if (!process.env[name]) {
                 if (required) {
@@ -34,7 +47,12 @@ internals.process = function (cfg) {
             }
 
             if (!type) {
-                cfg[key] = process.env[name];
+                if (interpolate) {
+                    cfg[key] = cfg[key].replace(original, process.env[name]);
+                }
+                else {
+                    cfg[key] = process.env[name];
+                }
                 continue;
             }
 
@@ -48,6 +66,38 @@ internals.process = function (cfg) {
             catch (err) {
                 throw new Errors.ConversionError(name, type, err);
             }
+        }
+    }
+
+    return cfg;
+};
+
+
+internals.processRefs = function (cfg, root) {
+
+    for (const key in cfg) {
+        if (typeof cfg[key] === 'object' &&
+            cfg[key] !== null) {
+
+            cfg[key] = internals.processRefs(cfg[key], root);
+        }
+        else if (typeof cfg[key] === 'string') {
+            const match = /\$\{self\.([^}]+)\}/.exec(cfg[key]);
+            if (!match) {
+                continue;
+            }
+
+            const [original, path] = match;
+            let pointer = root;
+            for (const segment of path.split('.')) {
+                if (!pointer.hasOwnProperty(segment)) {
+                    throw new Errors.MissingPropertyError(path);
+                }
+
+                pointer = pointer[segment];
+            }
+
+            cfg[key] = cfg[key].replace(original, pointer);
         }
     }
 
@@ -162,7 +212,8 @@ internals.init = function () {
                 acc.result.getconfig.env = env;
             }
             acc.found = true;
-            internals.merge(acc.result, internals.process(cfg.value));
+            internals.merge(acc.result, internals.processEnv(cfg.value));
+            internals.processRefs(acc.result, acc.result);
         }
 
         return acc;

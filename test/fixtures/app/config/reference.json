@@ -1,0 +1,10 @@
+{
+  "value": "reference",
+  "shallow": "some ${self.value}",
+  "a": {
+    "deeper": {
+      "value": "test"
+    }
+  },
+  "deep": "deep ${self.a.deeper.value}"
+}

@@ -71,3 +71,15 @@ exports.UnsetEnvVarError = class UnsetEnvVarError extends Error {
         return 'EUNSETENVVAR';
     }
 };
+
+exports.MissingPropertyError = class MissingPropertyError extends Error {
+    constructor(name) {
+
+        super(`The requested property ${name} is not set`);
+    }
+
+    get code() {
+
+        return 'EMISSINGPROPERTY';
+    }
+};

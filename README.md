@@ -59,6 +59,16 @@ Environment variables can be made optional by specifying a second `$` in the val
 
 When an optional environment variable is unspecified, it is _removed_ from that layer of configuration. This allows you to specify a default in `config/default` and an optional value in `config/dev`, and if the optional value in `config/dev` is unset the value from `config/default` will be used.
 
+Required environment variables may be used in string interpolation like so:
+
+```json
+{
+    "envVariable: "some ${ENV_VAR}"
+}
+```
+
+However when used in interpolation like the above, _no type conversions will be applied_.
+
 Additionally, since all environment variables are strings, getconfig can also perform type coercion for you by specifying a `::type` suffix. The following types are supported out of the box:
 
 ```json
@@ -96,6 +106,31 @@ const Config = require('getconfig');
 
 You can then use `::custom` as a suffix in your config and environment variables will be processed through your custom function. If your custom function accepts arguments (in the example above `arg1` and `arg2`) they can be passed like so `$$ENV_VAR::custom:arg:arg`. Note that every argument will be passed as a string and it is up to your custom function to handle them appropriately.
 
+## Self references
+
+Your configuration can also reference variables within itself as part of string interpolation, so a config file like the following is valid:
+
+```json
+{
+    "port": "$PORT::int",
+    "host": "$HOSTNAME",
+    "url": "http://${self.host}:${self.port}
+}
+```
+
+This allows you to define a variable once and reuse it in multiple places. This has the same limitations as string interpolation with environment variables however, it will not apply type conversions, and the value referenced must exist. You can refer to deeper keys by using a dot as a path separator like so:
+
+```json
+{
+    "some": {
+        "deep": {
+            "value": "here"
+        }
+    },
+    "top": "${self.some.deep.value}"
+}
+```
+
 ## Explicitly setting the config location
 
 In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, you can set a `GETCONFIG_ROOT` environment variable to the directory where your config files are located.
@@ -113,6 +148,8 @@ getconfig will always fill in the `getconfig.env` value in your resulting config
 
 
 ## Changelog
+- `4.1.0`
+    - Support string interpolation of environment variables and self references.
 - `4.0.0`
     - Total rewrite, now supports optional environment variables as well as type coercion and custom type processors.
 - `3.1.0`
