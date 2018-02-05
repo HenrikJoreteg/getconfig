@@ -131,6 +131,25 @@ This allows you to define a variable once and reuse it in multiple places. This 
 }
 ```
 
+Note that if the contents of a self referencing key is only the reference (i.e. `${self.value}` vs `http://${self.value}`) the reference will be _copied_ not interpolated. This allows you to reference objects in multiple places like so:
+
+```json
+{
+    "postgres": {
+        "user": "pg",
+        "database": "test"
+    },
+    "clientOne": {
+        "database": "${self.postgres}"
+    },
+    "clientTwo": {
+        "database": "${self.postgres}"
+    }
+}
+```
+
+In the above example, the `database` key under both `clientOne` and `clientTwo` will be a _copy_ of the top level `postgres` object, simplifying configuration reuse.
+
 ## Explicitly setting the config location
 
 In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, you can set a `GETCONFIG_ROOT` environment variable to the directory where your config files are located.

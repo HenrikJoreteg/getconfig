@@ -6,5 +6,6 @@
       "value": "test"
     }
   },
-  "deep": "deep ${self.a.deeper.value}"
+  "deep": "deep ${self.a.deeper.value}",
+  "copied": "${self.a}"
 }

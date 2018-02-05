@@ -97,7 +97,12 @@ internals.processRefs = function (cfg, root) {
                 pointer = pointer[segment];
             }
 
-            cfg[key] = cfg[key].replace(original, pointer);
+            if (cfg[key] === original) {
+                cfg[key] = pointer;
+            }
+            else {
+                cfg[key] = cfg[key].replace(original, pointer);
+            }
         }
     }
 

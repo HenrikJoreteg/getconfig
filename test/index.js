@@ -144,7 +144,7 @@ describe('environment variables', () => {
         expect(error.code).to.equal('EUNSETENVVAR');
     });
 
-    it('interpolates self references', () => {
+    it('interpolates and/or copies self references', () => {
 
         const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'reference' } }));
         const config = JSON.parse(app.stdout);
@@ -159,6 +159,11 @@ describe('environment variables', () => {
                 }
             },
             deep: 'deep test',
+            copied: {
+                deeper: {
+                    value: 'test'
+                }
+            },
             getconfig: { isDev: false, env: 'reference' }
         });
     });
