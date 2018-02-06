@@ -218,7 +218,6 @@ internals.init = function () {
             }
             acc.found = true;
             internals.merge(acc.result, internals.processEnv(cfg.value));
-            internals.processRefs(acc.result, acc.result);
         }
 
         return acc;
@@ -227,6 +226,8 @@ internals.init = function () {
     if (!config.found) {
         throw new Errors.FileNotFoundError();
     }
+
+    internals.processRefs(config.result, config.result);
 
     return config.result;
 };
