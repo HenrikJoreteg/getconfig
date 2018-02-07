@@ -148,7 +148,7 @@ Note that if the contents of a self referencing key is only the reference (i.e. 
 }
 ```
 
-In the above example, the `database` key under both `clientOne` and `clientTwo` will be a _copy_ of the top level `postgres` object, simplifying configuration reuse.
+In the above example, the `database` key under both `clientOne` and `clientTwo` will be a _reference_ to the top level `postgres` object, simplifying configuration reuse.
 
 ## Explicitly setting the config location
 
