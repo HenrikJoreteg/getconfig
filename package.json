@@ -8,7 +8,11 @@
     "code": "^5.1.2",
     "lab": "^15.1.2"
   },
+  "bin": {
+    "getconfig": "bin/getconfig"
+  },
   "files": [
+    "bin/getconfig",
     "errors.js",
     "index.js",
     "types.js"

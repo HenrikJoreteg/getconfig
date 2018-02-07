@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+const Fs = require('fs');
+const Path = require('path');
+const Util = require('util');
+
+let [path, key] = process.argv.slice(2);
+if (!key) {
+    if (!path) {
+        console.error('Usage: getconfig [path] key');
+        process.exit(1);
+    }
+
+    if (Fs.existsSync(Path.resolve(path))) {
+        path = Path.resolve(path);
+        key = '.';
+    }
+    else {
+        key = path;
+        path = process.cwd();
+    }
+}
+
+process.env.CODE_LOCATION = path;
+const config = require('../');
+let output;
+
+if (key === '.') {
+    output = Util.inspect(config, { depth: null });
+}
+else {
+    let pointer = config;
+    for (const segment of key.split('.')) {
+        if (!pointer.hasOwnProperty(segment)) {
+            console.error(`Unknown key: ${key}`);
+            process.exit(1);
+        }
+
+        pointer = pointer[segment];
+    }
+
+    output = typeof pointer === 'string' ? pointer : Util.inspect(pointer, { depth: null });
+}
+
+if (process.stdout.isTTY) {
+    console.log(output);
+}
+else {
+    process.stdout.write(output);
+}

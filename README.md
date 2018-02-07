@@ -165,8 +165,22 @@ Note: Google Cloud Functions automatically set `NODE_ENV` to `"production"` when
 
 getconfig will always fill in the `getconfig.env` value in your resulting config object with the current environment name so you can programatically determine the environment if you'd like. If no `NODE_ENV` is set it will also set `getconfig.isDev` to `true`.
 
+## CLI
+
+getconfig also includes a small helper tool for debugging and inserting values from your config into shell scripts and the like, it can be used like:
+
+```
+getconfig [path] config.value
+```
+
+The `path` parameter is optional and allows you to define the root of your project, the default is the current working directory. The second parameter is the path within the config to print.
+
 
 ## Changelog
+- `4.3.0`
+    - Include a CLI tool.
+- `4.2.0`
+    - Allow self references to work correctly outside of string interpolation.
 - `4.1.0`
     - Support string interpolation of environment variables and self references.
 - `4.0.0`
