@@ -98,6 +98,13 @@ describe('files', () => {
         const config = JSON.parse(app.stdout);
         expect(config).to.equal({ default: true, test: true, local: true, getconfig: { isDev: false, env: 'test' } });
     });
+
+    it('sets getconfig.env even when the requested env is not a specific file', () => {
+
+        const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'notarealenv' } }));
+        const config = JSON.parse(app.stdout);
+        expect(config).to.equal({ default: true, local: true, getconfig: { isDev: false, env: 'notarealenv' } });
+    });
 });
 
 describe('environment variables', () => {
