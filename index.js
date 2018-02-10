@@ -221,7 +221,7 @@ internals.init = function () {
         }
 
         return acc;
-    }, { result: { getconfig: { env: process.env.NODE_ENV, isDev: isDev || devEnvirons.includes(process.env.NODE_ENV) } }, found: false });
+    }, { result: { getconfig: { env: process.env.NODE_ENV || 'dev', isDev: isDev || devEnvirons.includes(process.env.NODE_ENV) } }, found: false });
 
     if (!config.found) {
         throw new Errors.FileNotFoundError();

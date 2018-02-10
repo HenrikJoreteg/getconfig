@@ -65,21 +65,21 @@ describe('directories', () => {
 
         const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'simple') } }));
         const config = JSON.parse(app.stdout);
-        expect(config).to.equal({ some: 'value', getconfig: { isDev: true } });
+        expect(config).to.equal({ some: 'value', getconfig: { env: 'dev', isDev: true } });
     });
 
     it('respects LAMBDA_TASK_ROOT env var for finding config', () => {
 
         const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { LAMBDA_TASK_ROOT: Path.join(__dirname, 'fixtures', 'simple') } }));
         const config = JSON.parse(app.stdout);
-        expect(config).to.equal({ some: 'value', getconfig: { isDev: true } });
+        expect(config).to.equal({ some: 'value', getconfig: { env: 'dev', isDev: true } });
     });
 
     it('allows overriding config directory path with GETCONFIG_ROOT', () => {
 
         const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { GETCONFIG_ROOT: Path.join(__dirname, 'fixtures', 'simple', 'config') } }));
         const config = JSON.parse(app.stdout);
-        expect(config).to.equal({ some: 'value', getconfig: { isDev: true } });
+        expect(config).to.equal({ some: 'value', getconfig: { env: 'dev', isDev: true } });
     });
 });
 
@@ -97,6 +97,13 @@ describe('files', () => {
         const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'test' } }));
         const config = JSON.parse(app.stdout);
         expect(config).to.equal({ default: true, test: true, local: true, getconfig: { isDev: false, env: 'test' } });
+    });
+
+    it('sets getconfig.env when NODE_ENV is unset', () => {
+
+        const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'simple') } }));
+        const config = JSON.parse(app.stdout);
+        expect(config).to.equal({ some: 'value', getconfig: { isDev: true, env: 'dev' } });
     });
 
     it('sets getconfig.env even when the requested env is not a specific file', () => {
