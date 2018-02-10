@@ -28,6 +28,7 @@ Getconfig looks for a config directory in the same folder as the main entry poin
 
 The configuration files attempted by require, in order, are:
 - `config/default`
+- `config/all`
 - `config/{{NODE_ENV}}`
 - `config/local`
 
@@ -177,6 +178,8 @@ The `path` parameter is optional and allows you to define the root of your proje
 
 
 ## Changelog
+- `4.4.0`
+    - Add the `all` layer, which loads before the `NODE_ENV` layer but after `default` and can help eliminate the need for multiple files with the same contents.
 - `4.3.0`
     - Include a CLI tool.
 - `4.2.0`

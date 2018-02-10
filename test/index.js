@@ -105,6 +105,17 @@ describe('files', () => {
         const config = JSON.parse(app.stdout);
         expect(config).to.equal({ default: true, local: true, getconfig: { isDev: false, env: 'notarealenv' } });
     });
+
+    it('processes the "all" layer for any NODE_ENV', () => {
+
+        let app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'test', DEFAULT_OVERRIDE: 'false' } }));
+        let config = JSON.parse(app.stdout);
+        expect(config).to.equal({ default: false, test: true, local: true, getconfig: { isDev: false, env: 'test' } });
+
+        app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'production', DEFAULT_OVERRIDE: 'false' } }));
+        config = JSON.parse(app.stdout);
+        expect(config).to.equal({ default: false, local: true, getconfig: { isDev: false, env: 'production' } });
+    });
 });
 
 describe('environment variables', () => {

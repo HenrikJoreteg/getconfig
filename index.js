@@ -209,11 +209,11 @@ internals.init = function () {
     const devEnvirons = ['dev', 'devel', 'develop', 'development'];
     const currentEnv = isDev ? devEnvirons : [process.env.NODE_ENV];
 
-    const config = ['default', ...currentEnv, 'local'].reduce((acc, env) => {
+    const config = ['default', 'all', ...currentEnv, 'local'].reduce((acc, env) => {
 
         const cfg = internals.require(root, env);
         if (!cfg.notfound) {
-            if (!['default', 'local'].includes(env)) {
+            if (!['default', 'all', 'local'].includes(env)) {
                 acc.result.getconfig.env = env;
             }
             acc.found = true;

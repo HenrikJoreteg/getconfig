@@ -1,0 +1,3 @@
+{
+  "default": "$$DEFAULT_OVERRIDE::boolean"
+}
