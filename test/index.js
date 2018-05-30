@@ -6,7 +6,7 @@ const { describe, it } = exports.lab = require('lab').script();
 const { expect } = require('code');
 
 const internals = {};
-internals.command = 'node';
+internals.command = spawnSync('which', ['node'], { encoding: 'utf8', shell: true }).stdout.trim();
 internals.options = { encoding: 'utf8', shell: true };
 internals.args = (app) => {
 
@@ -157,9 +157,9 @@ describe('environment variables', () => {
 
     it('interpolates environment variables', () => {
 
-        const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'interpolate', VAR: 'basic' } }));
+        const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'app'), NODE_ENV: 'interpolate', VAR: 'basic', VAR2: 'multiple' } }));
         const config = JSON.parse(app.stdout);
-        expect(config).to.equal({ default: true, local: true, basic: 'some basic interpolation', getconfig: { isDev: false, env: 'interpolate' } });
+        expect(config).to.equal({ default: true, local: true, basic: 'some basic multiple interpolation', getconfig: { isDev: false, env: 'interpolate' } });
     });
 
     it('fails with EUNSETENVVAR when attempting to interpolate an unset environment variable', () => {
@@ -189,6 +189,7 @@ describe('environment variables', () => {
                     value: 'test'
                 }
             },
+            multiple: 'reference test',
             getconfig: { isDev: false, env: 'reference' }
         });
     });

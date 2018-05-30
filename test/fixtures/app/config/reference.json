@@ -7,5 +7,6 @@
     }
   },
   "deep": "deep ${self.a.deeper.value}",
-  "copied": "${self.a}"
+  "copied": "${self.a}",
+  "multiple": "${self.value} ${self.a.deeper.value}"
 }

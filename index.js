@@ -48,7 +48,11 @@ internals.processEnv = function (cfg) {
 
             if (!type) {
                 if (interpolate) {
-                    cfg[key] = cfg[key].replace(original, process.env[name]);
+                    while (match) {
+                        [original, name] = match;
+                        cfg[key] = cfg[key].replace(original, process.env[name]);
+                        match = /\$\{([A-Z0-9_]+)\}/.exec(cfg[key]);
+                    }
                 }
                 else {
                     cfg[key] = process.env[name];
@@ -82,26 +86,29 @@ internals.processRefs = function (cfg, root) {
             cfg[key] = internals.processRefs(cfg[key], root);
         }
         else if (typeof cfg[key] === 'string') {
-            const match = /\$\{self\.([^}]+)\}/.exec(cfg[key]);
+            let match = /\$\{self\.([^}]+)\}/.exec(cfg[key]);
             if (!match) {
                 continue;
             }
 
-            const [original, path] = match;
-            let pointer = root;
-            for (const segment of path.split('.')) {
-                if (!pointer.hasOwnProperty(segment)) {
-                    throw new Errors.MissingPropertyError(path);
+            while (match) {
+                const [original, path] = match;
+                let pointer = root;
+                for (const segment of path.split('.')) {
+                    if (!pointer.hasOwnProperty(segment)) {
+                        throw new Errors.MissingPropertyError(path);
+                    }
+
+                    pointer = pointer[segment];
                 }
 
-                pointer = pointer[segment];
-            }
-
-            if (cfg[key] === original) {
-                cfg[key] = pointer;
-            }
-            else {
-                cfg[key] = cfg[key].replace(original, pointer);
+                if (cfg[key] === original) {
+                    cfg[key] = pointer;
+                }
+                else {
+                    cfg[key] = cfg[key].replace(original, pointer);
+                }
+                match = /\$\{self\.([^}]+)\}/.exec(cfg[key]);
             }
         }
     }
