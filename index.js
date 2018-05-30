@@ -203,6 +203,34 @@ internals.findConfig = function (root) {
 };
 
 
+internals.primeEnv = function (root) {
+
+    try {
+        const envFile = Fs.readFileSync(Path.join(root, '.env'), { encoding: 'utf8' });
+        envFile.split('\n').forEach((line) => {
+
+            const match = line.trim().match(/^([\w\.\-]+)\s*=\s*(.*)?$/);
+            if (!match) {
+                return;
+            }
+
+            const key = match[1];
+            let value = match[2] || '';
+            if (value.length > 0 && value[0] === '"' && value[value.length - 1] === '"') {
+                value = value.replace(/\\n/gm, '\n');
+            }
+            value = value.replace(/(^['"]|['"]$)/g, '').trim();
+            process.env[key] = value;
+        });
+    }
+    catch (err) {
+        if (Path.basename(root) === 'config') {
+            internals.primeEnv(Path.dirname(root));
+        }
+    }
+};
+
+
 internals.init = function () {
 
     const override = process.env.CODE_LOCATION ?
@@ -212,6 +240,7 @@ internals.init = function () {
             process.env.GETCONFIG_ROOT);
 
     const root = override ? Path.resolve(process.cwd(), override) : internals.findConfig();
+    internals.primeEnv(root);
     const isDev = !process.env.hasOwnProperty('NODE_ENV');
     const devEnvirons = ['dev', 'devel', 'develop', 'development'];
     const currentEnv = isDev ? devEnvirons : [process.env.NODE_ENV];

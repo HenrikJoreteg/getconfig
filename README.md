@@ -155,6 +155,10 @@ In the above example, the `database` key under both `clientOne` and `clientTwo` 
 
 In certain circumstances, when your app isn't run directly (e.g. test runners) getconfig may not be able to lookup your config file properly. In this case, you can set a `GETCONFIG_ROOT` environment variable to the directory where your config files are located.
 
+## .env files
+
+In addition to the above behaviors, `getconfig` will attempt to load a `.env` file located in either the `config` directory or the project root (i.e. one level above the `config` directory). These `.env` files are parsed as close to the [dotenv](https://github.com/motdotla/dotenv) package as possible for compatibility's sake.
+
 ### Cloud Functions
 
 When used in a Google Cloud Function or an AWS Lambda function, getconfig will use the `CODE_LOCATION` or `LAMBDA_TASK_ROOT` environment variable, respectively, to automatically locate the appropriate root. This means that you can include your `config` directory in your function deployment and things should work as you would expect them to.

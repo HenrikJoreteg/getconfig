@@ -125,6 +125,16 @@ describe('files', () => {
     });
 });
 
+describe('.env files', () => {
+
+    it('loads .env files', () => {
+
+        const app = spawnSync(internals.command, internals.args('./'), Object.assign({}, internals.options, { env: { CODE_LOCATION: Path.join(__dirname, 'fixtures', 'dots') } }));
+        const config = JSON.parse(app.stdout);
+        expect(config).to.equal({ plain: 'VALUE', spaces: 'yes', newlines: 'newlines\nbeing fun', single: 'ok to use', double: 'still ok', getconfig: { env: 'dev', isDev: true } });
+    });
+});
+
 describe('environment variables', () => {
 
     it('fails with EUNSETENVVAR when a required environment variable is not set', () => {

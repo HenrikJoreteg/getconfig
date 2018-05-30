@@ -1,0 +1,9 @@
+{
+  "plain": "$SOME",
+  "commented": "$$COMMENTED",
+  "spaces": "$ONEWITHSPACES",
+  "newlines": "$HOWABOUT",
+  "single": "$ARESINGLEQUOTES",
+  "double": "$ORDOUBLEQUOTES",
+  "empty": "$$ANDEMPTYVALUES"
+}
