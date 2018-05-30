@@ -115,7 +115,7 @@ Your configuration can also reference variables within itself as part of string 
 {
     "port": "$PORT::number",
     "host": "$HOSTNAME",
-    "url": "http://${self.host}:${self.port}
+    "url": "http://${self.host}:${self.port}"
 }
 ```
 
@@ -182,6 +182,9 @@ The `path` parameter is optional and allows you to define the root of your proje
 
 
 ## Changelog
+- `4.5.0`
+    - Add support for `.env` files.
+    - Fix bug with multiple variables in interpolation.
 - `4.4.0`
     - Add the `all` layer, which loads before the `NODE_ENV` layer but after `default` and can help eliminate the need for multiple files with the same contents.
 - `4.3.0`
